@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "176284279183",
+    "project_id": "anjuman-committee-abd0d",
+    "storage_bucket": "anjuman-committee-abd0d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176284279183:android:d133d9accb60f6bb30abfa",
+        "android_client_info": {
+          "package_name": "com.anjuman_committee.anjuman_committee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2Va4XjRlScfwztuWWYipBb_9grkVn7yE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

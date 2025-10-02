@@ -4,6 +4,7 @@ import 'package:anjuman_committee/views/bottom_tab/news/news.dart';
 import 'package:anjuman_committee/widget/custom_styling/m_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../views/bottom_tab/home/home.dart';
 import '../app_bar/custom_gradient_app_bar.dart';
@@ -18,7 +19,7 @@ class CustomBottomNavBar extends StatefulWidget {
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [const Home(), const Finance(), const News()];
-  final List<String> _titles = ['Home', 'Finance', 'News'];
+  final List<String> _titles = ['home'.tr, 'finance'.tr, 'news'.tr];
 
   void onItemTapped(int index) {
     setState(() => _selectedIndex = index);
@@ -37,9 +38,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         showUnselectedLabels: true,
         onTap: onItemTapped,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.money), label: 'Finance'),
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'News'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'.tr),
+          BottomNavigationBarItem(icon: Icon(Icons.money), label: 'finance'.tr),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'news'.tr),
         ],
       ),
     );

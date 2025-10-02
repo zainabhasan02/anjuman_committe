@@ -1,10 +1,15 @@
+import 'package:anjuman_committee/res/routes/routes_name.dart';
+import 'package:anjuman_committee/utils/utils.dart';
 import 'package:anjuman_committee/views/auth/login/login.dart';
 import 'package:anjuman_committee/widget/custom_styling/m_rounded_button.dart';
 import 'package:anjuman_committee/widget/custom_styling/text_field_decoration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../../../core/theme/static_assets/assets_img.dart';
+import '../../../res/routes/app_routes.dart';
 import '../../../widget/app_bar/custom_gradient_app_bar.dart';
 import '../../../widget/custom_styling/m_text_style.dart';
 
@@ -28,6 +33,7 @@ class _SignupState extends State<Signup> {
 
   String? selectedCityValue;
 
+  final _formKey = GlobalKey<FormState>();
   String selectedCode = '+966';
   final List<Map<String, String>> countryCodes = [
     {'code': '+966', 'flag': '🇸🇦'},
@@ -35,22 +41,23 @@ class _SignupState extends State<Signup> {
   ];
 
   final List<String> cityItems = [
-    'Jaipur',
-    'Kota',
-    'Udaipur',
-    'Chittor',
-    'Bikaner',
-    'Jodhpur',
+    'jaipur'.tr,
+    'kota'.tr,
+    'udaipur'.tr,
+    'chittor'.tr,
+    'bikaner'.tr,
+    'jodhpur'.tr,
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customGradientAppBar(title: 'Signup', showBack: false),
+      appBar: customGradientAppBar(title: 'signup'.tr, showBack: false),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(10.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 SizedBox(height: 10),
@@ -65,8 +72,15 @@ class _SignupState extends State<Signup> {
                   controller: nameCtrl,
                   style: mTextStyle12(),
                   textCapitalization: TextCapitalization.sentences,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${'please_enter'.tr} ${'enter_name'.tr.toLowerCase()}';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: buildInputDecoration(
-                    'Enter your name',
+                    'enter_name'.tr,
                     Icons.person,
                   ).copyWith(
                     suffixIcon: IconButton(
@@ -82,8 +96,19 @@ class _SignupState extends State<Signup> {
                 TextFormField(
                   controller: emailCtrl,
                   style: mTextStyle12(),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${'please_enter'.tr} ${'enter_email'.tr.toLowerCase()}';
+                    }
+                    if (!value.contains('@')) {
+                      return 'enter_valid_email'.tr;
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: buildInputDecoration(
-                    'Enter your email',
+                    'enter_email'.tr,
                     Icons.email_outlined,
                   ).copyWith(
                     suffixIcon: IconButton(
@@ -99,8 +124,22 @@ class _SignupState extends State<Signup> {
                 TextFormField(
                   controller: phoneCtrl,
                   style: mTextStyle12(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${'please_enter'.tr} ${'mobile_number'.tr.toLowerCase()}';
+                    }
+                    if (value.length != 10) {
+                      return 'enter_valid_mobile'.tr;;
+                    }
+                    return null;
+                  },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ],
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: buildInputDecoration(
-                    'Mobile Number',
+                    'mobile_number'.tr,
                     Icons.phone,
                   ).copyWith(
                     suffixIcon: IconButton(
@@ -116,14 +155,20 @@ class _SignupState extends State<Signup> {
                     }
                   },
                   keyboardType: TextInputType.phone,
-                  maxLength: 10,
                 ),
+                SizedBox(height: 15),
                 // City
                 DropdownButtonFormField<String>(
                   value: selectedCityValue,
-                  hint: const Text("Select City"),
+                  hint:  Text('select_city'.tr),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${'please_select'.tr} ${'select_city'.tr.toLowerCase()}';
+                    }
+                    return null;
+                  },
                   decoration: buildInputDecoration(
-                    'Select a City',
+                    'select_city'.tr,
                     Icons.location_city,
                   ),
                   dropdownColor: Colors.yellow.shade100,
@@ -146,8 +191,15 @@ class _SignupState extends State<Signup> {
                 TextFormField(
                   controller: passwordCtrl,
                   style: mTextStyle12(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'please_enter_password'.tr;
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: buildInputDecoration(
-                    'Password',
+                    'password'.tr,
                     Icons.password_outlined,
                   ).copyWith(
                     suffixIcon: IconButton(
@@ -172,8 +224,20 @@ class _SignupState extends State<Signup> {
                 TextFormField(
                   controller: confirmPasswordCtrl,
                   style: mTextStyle12(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'please_enter_confirm_password'.tr;
+                    }
+                    if (value != passwordCtrl.text) {
+                      return 'password_not_match'.tr;
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.visiblePassword,
+
                   decoration: buildInputDecoration(
-                    'Confirm Password',
+                    'confirm_password'.tr,
                     Icons.password_outlined,
                   ).copyWith(
                     suffixIcon: IconButton(
@@ -196,12 +260,17 @@ class _SignupState extends State<Signup> {
                 SizedBox(height: 20),
                 // Signup
                 MRoundedButton(
-                  btnName: 'Signup',
-                  onPressed:
-                      () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      ),
+                  btnName: 'signup'.tr,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      print('Form is valid');
+                      Get.toNamed(RoutesName.homeScreen);
+                      Utils.snackBarBottom('signup'.tr, 'registered_success'.tr);
+                    } else {
+                      Utils.snackBarBottom('signup'.tr, 'form_invalid'.tr);
+                      print('Form is invalid');
+                    }
+                  },
                 ),
               ],
             ),

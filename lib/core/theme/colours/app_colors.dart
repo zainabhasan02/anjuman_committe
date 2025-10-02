@@ -15,4 +15,5 @@ class AppColors {
   static const Color softRed = Color(0xFFEF9A9A);
   static const Color oliveGreen = Color(0xFF827717);
   static const Color pastelYellow = Color(0xFFFFF9C4);
+  static const Color blackColor = Color(0xff000000);
 }

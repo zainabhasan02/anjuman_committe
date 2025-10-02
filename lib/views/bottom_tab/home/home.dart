@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../widget/app_bar/custom_gradient_app_bar.dart';
 
@@ -13,6 +14,6 @@ class _HomeState extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Home'),),);
+      body: Center(child: Text('home'.tr),),);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:flutter_native_contact_picker/model/contact.dart';
+import 'package:get/get.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({super.key});
@@ -20,7 +21,7 @@ class _ContactsState extends State<Contacts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customGradientAppBar(title: 'Fetching Contact from Contact List'),
+      appBar: customGradientAppBar(title: 'fetching_contact'.tr),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -28,7 +29,7 @@ class _ContactsState extends State<Contacts> {
             MaterialButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: const Text("Select Contact"),
+              child:  Text('select_contact'.tr),
               onPressed: () async {
                 Contact? contact = await _contactPicker.selectContact();
                 setState(() {
@@ -40,7 +41,7 @@ class _ContactsState extends State<Contacts> {
             MaterialButton(
               color: Colors.green,
               textColor: Colors.white,
-              child: const Text("Select Phone Number"),
+              child:  Text('select_phone_number'.tr),
               onPressed: () async {
                 Contact? contact = await _contactPicker.selectPhoneNumber();
                 setState(() {
@@ -53,9 +54,9 @@ class _ContactsState extends State<Contacts> {
               ..._contacts!.map(
                 (contact) => Column(
                   children: [
-                    Text(contact.fullName ?? 'No name'),
+                    Text(contact.fullName ?? 'no_name'.tr),
                     if (_selectedPhoneNumber != null)
-                      Text('Selected: $_selectedPhoneNumber'),
+                      Text('${'selected'.tr}: $_selectedPhoneNumber'),
                     ...?contact.phoneNumbers?.map((number) => Text(number)),
                   ],
                 ),

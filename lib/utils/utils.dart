@@ -1,9 +1,10 @@
-import 'package:anjuman_committee/res/colors/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../core/theme/colours/app_colors.dart';
 
 class Utils {
   static void fieldFocusChange(

@@ -16,7 +16,7 @@ class NotificationScreen extends StatelessWidget {
     print('Title: $title, Body: $body');
 
     return Scaffold(
-      appBar: customGradientAppBar(title: 'Notification'),
+      appBar: customGradientAppBar(title: 'notification'.tr),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(10.0),

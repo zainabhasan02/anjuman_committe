@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/theme/colours/app_colors.dart';
-import '../../../widget/app_bar/custom_gradient_app_bar.dart';
 import '../../../widget/custom_styling/m_text_style.dart';
 
 class Finance extends StatefulWidget {
@@ -21,7 +21,7 @@ class _FinanceState extends State<Finance> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         appBar: TabBar(
           indicator: BoxDecoration(
@@ -34,12 +34,12 @@ class _FinanceState extends State<Finance> {
           indicatorSize: TabBarIndicatorSize.tab,
           unselectedLabelStyle: mTextStyle14(),
           labelStyle: mTextStyle14(mFontWeight: FontWeight.bold, textColor: AppColors.white),
-          tabs: [Tab(text: 'Summary'), Tab(text: 'Details')],
+          tabs: [Tab(text: 'summary'.tr), Tab(text: 'details'.tr)],
         ),
-        body: const TabBarView(
+        body:  TabBarView(
           children: [
-            Center(child: Text('Summary')),
-            Center(child: Text('Details')),
+            Center(child: Text('summary'.tr)),
+            Center(child: Text('details'.tr)),
           ],
         ),
       ),

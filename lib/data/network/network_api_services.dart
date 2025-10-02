@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:anjuman_committee/data/network/base_api_services.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../app_exceptions.dart';
@@ -20,9 +21,9 @@ class NetworkApiServices extends BaseApiServices {
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
-      throw InternetException('No Internet connection');
+      throw InternetException('internet_error'.tr);
     } on RequestTimeoutException {
-      throw RequestTimeoutException('Connection timeout');
+      throw RequestTimeoutException('timeout_error'.tr);
     }
     return responseJson;
   }
@@ -46,11 +47,11 @@ class NetworkApiServices extends BaseApiServices {
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
-      throw InternetException('No Internet connection');
+      throw InternetException('internet_error'.tr);
     } on RequestTimeoutException {
-      throw RequestTimeoutException('Connection timeout');
+      throw RequestTimeoutException('timeout_error'.tr);
     } on ServerException {
-      throw ServerException('Invalid server response.');
+      throw ServerException('server_error'.tr);
     }
     return responseJson;
   }
@@ -67,7 +68,7 @@ class NetworkApiServices extends BaseApiServices {
         return jsonDecode(response.body);
       default:
         throw FetchDataException(
-          'Error occurred while communicating with server${response.statusCode}',
+          '${'fetch_error'.tr} ${response.statusCode}',
         );
     }
   }

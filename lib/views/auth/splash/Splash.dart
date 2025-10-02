@@ -3,10 +3,11 @@ import 'package:anjuman_committee/core/theme/colours/app_colors.dart';
 import 'package:anjuman_committee/view_models/services/splash_services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../core/theme/static_assets/assets_img.dart';
 import '../../../main.dart';
-import '../../../res/assets/img_assets.dart';
 import '../login/login.dart';
 
 class Splash extends StatefulWidget {
@@ -124,7 +125,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                 // Custom logo
                 CircleAvatar(
                   radius: 80,
-                  backgroundImage: const AssetImage(ImgAssets.logo),
+                  backgroundImage: AssetImage(AssetsImg.logo),
                 ),
                 const SizedBox(height: 20),
                 // Lottie animation
@@ -150,7 +151,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                     );
                   },
                   child: Text(
-                    'Anjuman Committee',
+                    'app_title'.tr,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

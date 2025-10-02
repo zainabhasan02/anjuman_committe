@@ -10,28 +10,21 @@ class SplashServices {
   UserPreference userPreferenceViewModel = UserPreference();
 
   void isLogin() {
+    UserPreference userPreferenceViewModel = UserPreference();
+
     userPreferenceViewModel.getUser().then((value) {
-      print('Token: ${value.token}');
-      print('isLogin: ${value.isLogin}');
-      final token = value.token;
-      final isLoggedIn = token != null && token.isNotEmpty && token != 'null';
+      final isLoggedIn =
+          (value.isLogin ?? false) && (value.token?.isNotEmpty ?? false);
 
-      if (value.isLogin == false || value.isLogin.toString() == 'null') {
-        Timer(
-          const Duration(seconds: 3),
-              () => Get.toNamed(RoutesName.loginScreen),
-        );
-      } else {
-        Timer(const Duration(seconds: 3),
-              () => Get.toNamed(RoutesName.homeScreen),
-        );
-      }
-      /*Timer(
+      print("Token: ${value.token}");
+      print("isLogin: ${value.isLogin}");
+
+      Timer(
         const Duration(seconds: 3),
-            () => Get.toNamed(isLoggedIn ? RoutesName.homeScreen : RoutesName.loginScreen),
-      );*/
-      print('isLoggedIn: $isLoggedIn');
-
+        () => Get.offAllNamed(
+          isLoggedIn ? RoutesName.homeScreen : RoutesName.loginScreen,
+        ),
+      );
     });
   }
 }

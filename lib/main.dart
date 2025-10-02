@@ -1,8 +1,8 @@
 import 'package:anjuman_committee/firebase_options.dart';
-import 'package:anjuman_committee/getx_localization/language.dart';
 import 'package:anjuman_committee/res/routes/app_routes.dart';
 import 'package:anjuman_committee/res/routes/routes_name.dart';
-import 'package:anjuman_committee/views/auth/splash/Splash.dart';
+import 'package:anjuman_committee/translations/app_translations.dart';
+import 'package:anjuman_committee/view_models/controller/language_controller.dart';
 import 'package:anjuman_committee/views/bottom_tab/finance/finance.dart';
 import 'package:anjuman_committee/views/bottom_tab/home/home.dart';
 import 'package:anjuman_committee/views/bottom_tab/news/news.dart';
@@ -14,12 +14,18 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'core/theme/colours/app_colors.dart';
 import 'notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await GetStorage.init(); // initialize local storage
+  final LanguageController languageController = LanguageController();
+  await languageController.loadLocaleFromStorage();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -46,7 +52,7 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
-  runApp(const MyApp());
+  runApp(MyApp(languageController: languageController));
 }
 
 // Background handler
@@ -58,19 +64,19 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final LanguageController languageController;
+
+  const MyApp({Key? key, required this.languageController}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      /*theme:  ThemeData(
-        fontFamily: 'NotoNastaliq',
-      ),
-      translations: Language(),
-      locale: Locale('ur', 'IN'),
-      fallbackLocale: Locale('ur', 'IN'),*/
+      translations: AppTranslations(),
+      locale: languageController.currentLocale,
+      // // initial locale
+      fallbackLocale: const Locale('en', 'US'),
       initialRoute: RoutesName.splashScreen,
       getPages: AppRoutes.appRoutes(),
     );
@@ -87,7 +93,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [const Home(), const Finance(), const News()];
-  final List<String> _titles = ['Home', 'Finance', 'News'];
+  final List<String> _titles = ["home".tr, "finance".tr, "news".tr];
 
   void onItemTapped(int index) {
     setState(() => _selectedIndex = index);
@@ -100,15 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: _titles[_selectedIndex],
         showBack: false,
         actions: [
-          IconButton(
-            onPressed: () {
-              /*Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Settings()),
-              );*/
-            },
-            icon: Icon(Icons.settings),
-          ),
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -130,9 +127,9 @@ class _MyHomePageState extends State<MyHomePage> {
         showUnselectedLabels: true,
         onTap: onItemTapped,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.money), label: 'Finance'),
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'News'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home".tr),
+          BottomNavigationBarItem(icon: Icon(Icons.money), label: "finance".tr),
+          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: "news".tr),
         ],
       ),
     );

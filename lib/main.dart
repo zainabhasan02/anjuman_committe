@@ -1,4 +1,4 @@
-import 'package:anjuman_committee/firebase_options.dart';
+import 'package:anjuman_committee/fcm/firebase_options.dart';
 import 'package:anjuman_committee/res/routes/app_routes.dart';
 import 'package:anjuman_committee/res/routes/routes_name.dart';
 import 'package:anjuman_committee/translations/app_translations.dart';
@@ -6,7 +6,7 @@ import 'package:anjuman_committee/view_models/controller/language_controller.dar
 import 'package:anjuman_committee/views/bottom_tab/finance/finance.dart';
 import 'package:anjuman_committee/views/bottom_tab/home/home.dart';
 import 'package:anjuman_committee/views/bottom_tab/news/news.dart';
-import 'package:anjuman_committee/views/other/contacts.dart';
+import 'package:anjuman_committee/views/other/contact/contacts.dart';
 import 'package:anjuman_committee/widget/app_bar/custom_gradient_app_bar.dart';
 import 'package:anjuman_committee/widget/custom_styling/m_text_style.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'core/theme/colours/app_colors.dart';
-import 'notification_service.dart';
+import 'view_models/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,14 +107,10 @@ class _MyHomePageState extends State<MyHomePage> {
         showBack: false,
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Contacts()),
-              );
-            },
+            onPressed: () => Get.toNamed(RoutesName.contactScreen),
             icon: Icon(Icons.contacts),
           ),
+          IconButton(onPressed: () => Get.toNamed(RoutesName.paymentScreen), icon: Icon(Icons.paypal_outlined))
         ],
       ),
       body: _screens[_selectedIndex],
@@ -129,7 +125,10 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "home".tr),
           BottomNavigationBarItem(icon: Icon(Icons.money), label: "finance".tr),
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: "news".tr),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper),
+            label: "news".tr,
+          ),
         ],
       ),
     );

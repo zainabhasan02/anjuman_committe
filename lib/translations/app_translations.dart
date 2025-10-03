@@ -12,7 +12,7 @@ class AppTranslations extends Translations {
       'login': 'Login',
       'email': 'Email',
       'password': 'Password',
-      'save' : 'Save',
+      'save': 'Save',
       'signup': 'Signup',
       'enter_name': 'Enter your name',
       'enter_email': 'Enter your email',
@@ -58,8 +58,12 @@ class AppTranslations extends Translations {
       'selected': 'Selected',
       'title': 'Title',
       'notification': 'Notification',
+      'pay_now': 'Pay Now',
+      'razorpay_payment': 'Razorpay Payment',
+      'payment_id': 'Payment ID',
+      'amount': 'Amount',
     },
-    'hi_IN':{
+    'hi_IN': {
       'app_title': 'अंजुमन समिति',
       'selected_language': 'भाषा चुनें',
       'english': 'अंग्रेज़ी',
@@ -68,7 +72,7 @@ class AppTranslations extends Translations {
       'login': 'लॉग इन करें',
       'email': 'ईमेल',
       'password': 'पासवर्ड',
-      'save' : 'सहेजें',
+      'save': 'सहेजें',
       'signup': 'साइनअप',
       'enter_name': 'अपना नाम दर्ज करें',
       'enter_email': 'अपना ईमेल दर्ज करें',
@@ -115,8 +119,12 @@ class AppTranslations extends Translations {
       'selected': 'चयनित',
       'title': 'शीर्षक',
       'notification': 'सूचना',
+      'pay_now': 'अब भुगतान करें',
+      'razorpay_payment': 'रेजरपे भुगतान',
+      'payment_id': 'भुगतान आईडी',
+      'amount': 'राशि',
     },
-    'ur_PK':{
+    'ur_PK': {
       'app_title': 'انجمن کمیٹی',
       'selected_language': 'زبان منتخب کریں',
       'english': 'انگریزی',
@@ -125,7 +133,7 @@ class AppTranslations extends Translations {
       'login': 'لاگ ان',
       'email': 'ای میل',
       'password': 'پاس ورڈ',
-      'save' : 'محفوظ کریں',
+      'save': 'محفوظ کریں',
       'signup': 'سائن اپ',
       'enter_name': 'اپنا نام درج کریں',
       'enter_email': 'اپنا ای میل درج کریں',
@@ -172,6 +180,10 @@ class AppTranslations extends Translations {
       'selected': 'منتخب شدہ',
       'title': 'عنوان',
       'notification': 'اطلاع',
-    }
+      'pay_now': 'ابھی ادائیگی کریں۔',
+      'razorpay_payment': 'ریزر پے ادائیگی',
+      'payment_id': 'ادائیگی کی شناخت',
+      'amount': 'رقم',
+    },
   };
 }

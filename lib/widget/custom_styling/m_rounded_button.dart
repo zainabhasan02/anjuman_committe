@@ -11,6 +11,7 @@ class MRoundedButton extends StatelessWidget {
   final bool isLoading;
   final Color bgColor;
   final Color fgColor;
+  final double height, width;
 
   const MRoundedButton({
     super.key,
@@ -21,6 +22,8 @@ class MRoundedButton extends StatelessWidget {
     this.fontSize = 18,
     this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
     this.isLoading = false,
+    this.height = 45,
+    this.width = double.infinity
   });
 
   @override
@@ -28,8 +31,8 @@ class MRoundedButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        width: 100,
-        height: 45,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           gradient: LinearGradient(

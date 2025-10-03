@@ -1,9 +1,8 @@
 import 'package:anjuman_committee/widget/custom_styling/m_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../core/theme/colours/app_colors.dart';
-import '../../view_models/controller/language_controller.dart';
+import '../../view_models/controller/translations/language_controller.dart';
 
 AppBar customGradientAppBar({
   required String title,
@@ -13,7 +12,7 @@ AppBar customGradientAppBar({
   final LanguageController languageController = Get.put(LanguageController());
   // Gear icon as default action
   final settingsAction = PopupMenuButton<Locale>(
-    icon: const Icon(Icons.settings),
+    icon: Icon(Icons.settings),
     onSelected: (Locale locale) {
       languageController.changeLocale(locale);
     },

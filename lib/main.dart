@@ -2,11 +2,11 @@ import 'package:anjuman_committee/fcm/firebase_options.dart';
 import 'package:anjuman_committee/res/routes/app_routes.dart';
 import 'package:anjuman_committee/res/routes/routes_name.dart';
 import 'package:anjuman_committee/translations/app_translations.dart';
-import 'package:anjuman_committee/view_models/controller/language_controller.dart';
+import 'package:anjuman_committee/view_models/controller/theme/theme_controller.dart';
+import 'package:anjuman_committee/view_models/controller/translations/language_controller.dart';
 import 'package:anjuman_committee/views/bottom_tab/finance/finance.dart';
 import 'package:anjuman_committee/views/bottom_tab/home/home.dart';
 import 'package:anjuman_committee/views/bottom_tab/news/news.dart';
-import 'package:anjuman_committee/views/other/contact/contacts.dart';
 import 'package:anjuman_committee/widget/app_bar/custom_gradient_app_bar.dart';
 import 'package:anjuman_committee/widget/custom_styling/m_text_style.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -52,6 +52,7 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
+  /// Using Getx
   runApp(MyApp(languageController: languageController));
 }
 
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.put(ThemeController());
     return GetMaterialApp(
       title: 'Flutter Demo',
       translations: AppTranslations(),
@@ -79,6 +81,9 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en', 'US'),
       initialRoute: RoutesName.splashScreen,
       getPages: AppRoutes.appRoutes(),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeController.theme,
     );
   }
 }
@@ -93,7 +98,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [const Home(), const Finance(), const News()];
-  final List<String> _titles = ["home".tr, "finance".tr, "news".tr];
+  final List<String> _titles = ['home'.tr, 'finance'.tr, 'news'.tr];
 
   void onItemTapped(int index) {
     setState(() => _selectedIndex = index);
@@ -101,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.put(ThemeController());
     return Scaffold(
       appBar: customGradientAppBar(
         title: _titles[_selectedIndex],
@@ -110,7 +116,24 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => Get.toNamed(RoutesName.contactScreen),
             icon: Icon(Icons.contacts),
           ),
-          IconButton(onPressed: () => Get.toNamed(RoutesName.paymentScreen), icon: Icon(Icons.paypal_outlined))
+          IconButton(
+            onPressed: () => Get.toNamed(RoutesName.paymentScreen),
+            icon: Icon(Icons.paypal_outlined),
+          ),
+          IconButton(
+            onPressed: () => themeController.toggleTheme(),
+            icon: Obx(
+              () => Icon(
+                themeController.isDarkMode.value
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+                color:
+                    themeController.isDarkMode.value
+                        ? Colors.black
+                        : Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
       body: _screens[_selectedIndex],
@@ -119,7 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedItemColor: AppColors.oliveGreen,
         showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: mTextStyle14(mFontWeight: FontWeight.bold),
+        selectedLabelStyle: mTextStyle14(
+          mFontWeight: FontWeight.bold,
+          textColor:
+              themeController.isDarkMode.value ? Colors.white : Colors.black,
+        ),
         showUnselectedLabels: true,
         onTap: onItemTapped,
         items: [

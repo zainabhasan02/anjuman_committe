@@ -1,6 +1,6 @@
 import 'package:anjuman_committee/res/routes/app_routes.dart';
 import 'package:anjuman_committee/utils/utils.dart';
-import 'package:anjuman_committee/view_models/controller/language_controller.dart';
+import 'package:anjuman_committee/view_models/controller/translations/language_controller.dart';
 import 'package:anjuman_committee/widget/app_bar/custom_gradient_app_bar.dart';
 import 'package:anjuman_committee/widget/custom_styling/m_rounded_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +48,6 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: customGradientAppBar(
         title: 'app_title'.tr,
-
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.0),

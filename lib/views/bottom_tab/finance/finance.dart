@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../core/theme/colours/app_colors.dart';
 import '../../../widget/custom_styling/m_text_style.dart';
 
@@ -33,7 +32,7 @@ class _FinanceState extends State<Finance> {
           ),
           indicatorSize: TabBarIndicatorSize.tab,
           unselectedLabelStyle: mTextStyle14(),
-          labelStyle: mTextStyle14(mFontWeight: FontWeight.bold, textColor: AppColors.white),
+          labelStyle: mTextStyle14(mFontWeight: FontWeight.bold, textColor: AppColors.blackColor),
           tabs: [Tab(text: 'summary'.tr), Tab(text: 'details'.tr)],
         ),
         body:  TabBarView(

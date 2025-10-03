@@ -42,7 +42,7 @@ dependencies:
   shimmer: ^3.0.0
   pull_to_refresh: ^2.0.0
   image_picker: ^1.1.2
-  shared_preferences: ^2.5.3
+  shared_preferences: ^2.5.3 # handles persistence across app restarts.
   lottie: ^3.3.1 # for animation
   audioplayers: ^6.5.0 # sounds
   css_colors: ^1.1.7
@@ -55,6 +55,7 @@ dependencies:
   flutter_local_notifications: ^17.2.1
   get_storage: ^2.1.1
   razorpay_flutter: ^1.4.0
+  provider: ^6.1.5+1 # We can store the theme state in a ChangeNotifier &handles reactive updates for theme persistent
 
 
 dev_dependencies:

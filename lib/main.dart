@@ -1,20 +1,25 @@
 import 'package:anjuman_committee/fcm/firebase_options.dart';
 import 'package:anjuman_committee/res/routes/app_routes.dart';
 import 'package:anjuman_committee/res/routes/routes_name.dart';
+import 'package:anjuman_committee/state_management/inherited_widget/provider/counter_provider.dart';
 import 'package:anjuman_committee/translations/app_translations.dart';
 import 'package:anjuman_committee/view_models/controller/theme/theme_controller.dart';
 import 'package:anjuman_committee/view_models/controller/translations/language_controller.dart';
 import 'package:anjuman_committee/views/bottom_tab/finance/finance.dart';
 import 'package:anjuman_committee/views/bottom_tab/home/home.dart';
 import 'package:anjuman_committee/views/bottom_tab/news/news.dart';
+import 'package:anjuman_committee/views/other/counter_screen/counter_screen.dart';
+import 'package:anjuman_committee/views/other/profile/profile.dart';
 import 'package:anjuman_committee/widget/app_bar/custom_gradient_app_bar.dart';
 import 'package:anjuman_committee/widget/custom_styling/m_text_style.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:app_links/app_links.dart';
 
 import 'core/theme/colours/app_colors.dart';
 import 'view_models/services/notification_service.dart';
@@ -52,6 +57,17 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
+  final appLinks = AppLinks();
+
+  // INITIAL DEEP LINK
+  final initialUri = await appLinks.getInitialAppLink();
+  print("🌟 Initial Deep Link: $initialUri");
+
+  // STREAM LISTENER
+  appLinks.uriLinkStream.listen((uri) {
+    print("🔥 New Deep Link: $uri");
+  });
+
   /// Using Getx
   runApp(MyApp(languageController: languageController));
 }
@@ -64,27 +80,40 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print('onBackgroundMessage body: ${message.notification!.body}');
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final LanguageController languageController;
 
   const MyApp({Key? key, required this.languageController}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int counter = 0;
+
+  void incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.put(ThemeController());
-    return GetMaterialApp(
+    return CounterProvider(counter: counter, onIncrement: incrementCounter, child: GetMaterialApp(
       title: 'Flutter Demo',
       translations: AppTranslations(),
-      locale: languageController.currentLocale,
+      locale: widget.languageController.currentLocale,
       // // initial locale
       fallbackLocale: const Locale('en', 'US'),
-      initialRoute: RoutesName.splashScreen,
+      initialRoute: RoutesName.homeScreen,
       getPages: AppRoutes.appRoutes(),
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: themeController.theme,
-    );
+    ));
   }
 }
 
@@ -97,8 +126,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  final List<Widget> _screens = [const Home(), const Finance(), const News()];
-  final List<String> _titles = ['home'.tr, 'finance'.tr, 'news'.tr];
+  final List<Widget> _screens = [
+    const Home(),
+    const Finance(),
+    const News(),
+    const Profile(),
+  ];
+  final List<String> _titles = [
+    'home'.tr,
+    'finance'.tr,
+    'news'.tr,
+    'profile'.tr,
+  ];
 
   void onItemTapped(int index) {
     setState(() => _selectedIndex = index);
@@ -123,21 +162,22 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             onPressed: () => themeController.toggleTheme(),
             icon: Obx(
-              () => Icon(
-                themeController.isDarkMode.value
-                    ? Icons.dark_mode
-                    : Icons.light_mode,
-                color:
+                  () =>
+                  Icon(
+                    themeController.isDarkMode.value
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
+                    color:
                     themeController.isDarkMode.value
                         ? Colors.black
                         : Colors.white,
-              ),
+                  ),
             ),
           ),
         ],
       ),
       body: _screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(key: const Key('BottomNavigationBar'),
         currentIndex: _selectedIndex,
         selectedItemColor: AppColors.oliveGreen,
         showSelectedLabels: true,
@@ -145,19 +185,30 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedLabelStyle: mTextStyle14(
           mFontWeight: FontWeight.bold,
           textColor:
-              themeController.isDarkMode.value ? Colors.white : Colors.black,
+          themeController.isDarkMode.value ? Colors.white : Colors.black,
         ),
         showUnselectedLabels: true,
         onTap: onItemTapped,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home".tr),
-          BottomNavigationBarItem(icon: Icon(Icons.money), label: "finance".tr),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "home".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.money_outlined),
+            label: "finance".tr,
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
             label: "news".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.user),
+            label: "profile".tr,
           ),
         ],
       ),
     );
   }
+
 }

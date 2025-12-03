@@ -7,6 +7,10 @@ import 'package:anjuman_committee/views/other/payment_gateway/razor_payment_scre
 import 'package:get/get.dart';
 
 import '../../views/auth/splash/Splash.dart';
+import '../../views/other/animation/animated_box.dart';
+import '../../views/other/animation/my_animation.dart';
+import '../../views/other/counter_screen/counter_screen.dart';
+import '../../views/other/my_gesture_detector/my_gesture_detector.dart';
 import '../../views/other/notification/notification_screen.dart';
 
 class AppRoutes {
@@ -15,25 +19,25 @@ class AppRoutes {
       name: RoutesName.splashScreen,
       page: () => Splash(),
       transition: Transition.fadeIn,
-      transitionDuration: Duration(milliseconds: 2500),
+      transitionDuration: Duration(milliseconds: 250),
     ),
     GetPage(
       name: RoutesName.loginScreen,
       page: () => Login(),
       transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 2500),
+      transitionDuration: Duration(milliseconds: 250),
     ),
     GetPage(
       name: RoutesName.signupScreen,
       page: () => Signup(),
       transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 2500),
+      transitionDuration: Duration(milliseconds: 250),
     ),
     GetPage(
       name: RoutesName.homeScreen,
       page: () => MyHomePage(),
       transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 2500),
+      transitionDuration: Duration(milliseconds: 250),
     ),
     GetPage(
       name: RoutesName.notificationScreen,
@@ -48,5 +52,12 @@ class AppRoutes {
       transitionDuration: Duration(milliseconds: 800),
     ),
     GetPage(name: RoutesName.contactScreen, page: () => Contacts()),
+    GetPage(
+      name: RoutesName.myGestureDetectorScreen,
+      page: () => MyGestureDetector(),
+    ),
+    GetPage(name: RoutesName.myAnimationScreen, page: () => MyAnimation()),
+    GetPage(name: RoutesName.counterScreen, page: () => CounterScreen()),
+
   ];
 }

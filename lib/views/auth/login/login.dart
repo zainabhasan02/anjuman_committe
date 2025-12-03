@@ -60,6 +60,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   TextFormField(
+                    key: const Key('email'),
                     controller: loginVM.emailController.value,
                     focusNode: loginVM.emailFocusNode.value,
                     validator: (value) {
@@ -83,6 +84,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
+                    key: const Key('password'),
                     controller: loginVM.passwordController.value,
                     focusNode: loginVM.passwordFocusNode.value,
                     obscureText: false,
@@ -103,15 +105,15 @@ class _LoginState extends State<Login> {
               ),
             ),
             const SizedBox(height: 40),
-            MRoundedButton(
+            MRoundedButton(key: const Key('loginButton'),
               btnName: 'login'.tr,
               onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  print('Form is valid');
+                /*if (formKey.currentState!.validate()) {
+                  print('Form is valid');*/
                   loginVM.loginApi();
-                } else {
+                /*} else {
                   print('Form is invalid');
-                }
+                }*/
               },
             ),
 

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:anjuman_committee/core/theme/colours/app_colors.dart';
-import 'package:anjuman_committee/widget/app_bar/custom_gradient_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:http/http.dart' as http;
@@ -90,17 +89,23 @@ class MyHook extends HookWidget {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: users.value.isEmpty && !isLoading.value
-                  ? Center(child: Text('No users found', style: TextStyle(color: Colors.grey[600])))
-                  : ListView.separated(
-                      itemCount: users.value.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        final user = users.value[index];
-                        return _buildUserCard(user);
-                      },
-                    ),
+              child:
+                  users.value.isEmpty && !isLoading.value
+                      ? Center(
+                        child: Text(
+                          'No users found',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      )
+                      : ListView.separated(
+                        itemCount: users.value.length,
+                        separatorBuilder:
+                            (context, index) => const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final user = users.value[index];
+                          return _buildUserCard(user);
+                        },
+                      ),
             ),
           ],
         ),
@@ -133,8 +138,11 @@ class MyHook extends HookWidget {
                   color: AppColors.oliveGreen.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.timer_outlined,
-                    color: AppColors.oliveGreen, size: 20),
+                child: const Icon(
+                  Icons.timer_outlined,
+                  color: AppColors.oliveGreen,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               Column(
@@ -174,9 +182,14 @@ class MyHook extends HookWidget {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(Icons.data_usage_rounded, color: Colors.grey),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              prefixIcon: const Icon(
+                Icons.data_usage_rounded,
+                color: Colors.grey,
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
             ),
           ),
         ],
@@ -234,8 +247,11 @@ class MyHook extends HookWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.email_outlined,
-                              size: 14, color: Colors.grey[500]),
+                          Icon(
+                            Icons.email_outlined,
+                            size: 14,
+                            color: Colors.grey[500],
+                          ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
@@ -252,8 +268,11 @@ class MyHook extends HookWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios_rounded,
-                    size: 16, color: Colors.grey[300]),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 16,
+                  color: Colors.grey[300],
+                ),
               ],
             ),
           ),

@@ -14,7 +14,6 @@ jobs:
     name: Build & Release
     runs-on: macos-latest
     steps:
-<<<<<<< HEAD
       - # ⬇️ Checkout source
       - uses: actions/checkout@v3
 
@@ -25,19 +24,11 @@ jobs:
           java-version: '17'
 
       # ⬇️ Setup Flutter
-=======
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '12'
->>>>>>> 2768e10220b94b591faede200e549e88126df57f
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
 
-<<<<<<< HEAD
       # ⬇️ Install dependencies
       - run: flutter pub get
 
@@ -50,17 +41,6 @@ jobs:
         run: flutter build ios --no-codesign
 
       # 🔵 Release to GitHub
-=======
-      - run: flutter build apk --release --split-per-abi
-      - run: |
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
-          zip -r app.ipa Payload
->>>>>>> 2768e10220b94b591faede200e549e88126df57f
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:

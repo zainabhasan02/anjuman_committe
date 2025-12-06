@@ -14,25 +14,33 @@ jobs:
     name: Build & Release
     runs-on: macos-latest
     steps:
+      - # ⬇️ Checkout source
       - uses: actions/checkout@v3
+
+      # ⬇️ Setup Java (Android)
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '12'
+          java-version: '17'
+
+      # ⬇️ Setup Flutter
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
 
-      - run: flutter build apk --release --split-per-abi
-      - run: |
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
-          zip -r app.ipa Payload
+      # ⬇️ Install dependencies
+      - run: flutter pub get
+
+      # 🔵 Build Android
+      - name: Build Android APK
+        run: flutter build apk --release --split-per-abi
+
+      # 🔵 Build iOS (IPA)
+      - name: Build iOS IPA (No Co-Design)
+        run: flutter build ios --no-codesign
+
+      # 🔵 Release to GitHub
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
